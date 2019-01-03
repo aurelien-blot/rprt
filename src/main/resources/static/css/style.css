@@ -1,0 +1,270 @@
+/*** HEADER ***/
+.title {
+	height: 100px;
+	background-color: #428BCA;
+}
+
+.title h1 {
+	margin: 0px;
+	padding-top: 25px;
+}
+
+.title h1 a {
+	color: white;
+	font-weight: 400
+}
+
+.title h1 a:hover {
+    text-decoration: none;
+}
+
+/*** NAVIGATION ***/
+.display-none {
+	display: none;
+}
+
+.brand {
+	white-space: nowrap;
+}
+
+.text-blue {
+    color: #428BCA!important;
+}
+
+.show>a.nav-link.text-blue {
+	color : #fff!important;
+}
+
+.show>.nav-link.text-blue {
+    color: #fff;
+    background-color: #428BCA;
+}
+
+.bg-blue {
+    background-color: #428BCA!important;
+}
+
+.dropdown-item.text-blue:active {
+	color: #fff!important;
+    background-color: #428BCA;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: .5rem;
+    padding-left: .5rem;
+}
+
+.navbar-light .navbar-nav .nav-link.active.bg-blue {
+	color: #fff;
+}
+
+/*** FOOTER BAS DE PAGE ***/
+html{
+  height:100%;
+}
+ 
+body{
+  height:100%;
+  position: relative;
+}
+ 
+#wrap{
+  min-height:100%;
+  position: relative;
+}
+ 
+#header{
+  position: relative;
+}
+
+#content{
+  position: relative;
+  padding-bottom: 50px;
+}
+
+#footer{
+  height: 30px;
+  width: 100%;
+  /*position: absolute;*/
+  /*bottom: 0;*/
+}
+
+.center{
+	text-align : center;
+}
+
+/* HOME */
+.home-block{
+	margin-top: 30px;
+}
+
+.home-table {
+	height: 400px;
+	max-height: 100%;
+}
+
+.card-header {
+	text-align : center;
+}
+
+
+
+.btn-rond {
+  padding:2px;
+  line-height: 0;
+  border-radius:25px;
+}
+
+/* SEARCH */
+#search-block {
+	position: absolute;
+	margin-top: 70px;
+    right: 0px;
+    height: 100%;
+    display: none;
+}
+
+
+/******************** A REVOIR ************************/
+.form-search::after {
+    content: "\f002";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: #9ea1a5;
+    margin-top: 16px;
+    pointer-events: none;
+    position: absolute;
+    right: 26px;
+    top: 0;
+}
+
+.subtitle{
+	color: #6c757d;
+}
+
+
+/******** CREATION DE DEVIS  ********/
+
+/*** Page 1 création de devis ***/
+#newQuote {
+	margin-top: 30px;
+}
+
+#newQuote > .card {
+	margin-top: 30px;
+}
+
+.accordion{
+	min-height: 160px;
+}
+
+#alert > .alert {
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+#initQuote {
+    background-color: #fdfdfd;
+}
+
+/*** Page 2 choix de l'abaque ***/
+#metric, #ssmenu-quote {
+	margin-top: 30px;
+}
+
+.card-body-slim {
+	flex: 1 1 auto;
+	padding: 0.6rem;
+}
+
+.abacus-choice-contract {
+	margin-bottom: 20px;
+}
+
+#metricTableValidationButton {
+	margin-top: 20px;
+}
+
+.abacus-height {
+	height: 400px;
+    max-height: 100%;
+}
+
+#selectContract {
+    background-color:#fdfdfd;
+}
+
+.metricsTableList {
+	max-height: 300px;
+    margin-bottom: 10px;
+    overflow-y:auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/*** Page 3 chiffrages réalisation et globaux ***/
+
+.quote-table {
+	height: 400px;
+	max-height: 100%;
+}
+
+.quote-table-short {
+	padding-bottom:0;
+}
+
+.step-indicator{
+	margin-top: 30px;
+}
+
+.icon::after {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+
+.edit::after {
+	font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f044";
+}
+
+.ss-total{
+	margin-top : 10px;
+}
+
+div#BlocTitle1 {
+    font-size: 0.9em;
+}
+
+#BlocTitle2 h3 {
+	display: inline-block;
+}
+
+#quoteTitle, #quoteDescription {
+	border: 1px solid #FFF;
+}
+
+.bootstrap-select .btn {
+	display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    line-height: 1.5;
+    color: #495057;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    
+    
+	background-color: #FFF;
+}
+
+.btn-light:not(:disabled):not(.disabled).active, .btn-light:not(:disabled):not(.disabled):active, .show>.btn-light.dropdown-toggle {
+	color: #495057;
+	background-color: #FFF;
+}
+
+.tab-content{
+	
+	background : black;
+}

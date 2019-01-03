@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CGI - Outil de chiffrage</title>
+
+    <div th:replace="fragments/header :: header-css"></div>
+
+</head>
+<body>
+
+	<div th:replace="fragments/header :: header" ></div>
+	<nav th:replace="fragments/navigation :: navigation" ></nav>
+	<div th:replace="admin/fragments/adminNav.html :: adminNav" ></div>
+	
+	<div id="templatesDiv" class="container">
+
+       	<div class="row">
+		</div>
+	
+	<div th:replace="fragments/footer :: footer"></div>
+	<div th:replace="fragments/bootstrapTableScripts :: bootstrap-table-footer"></div>
+
+</body>
+</html>

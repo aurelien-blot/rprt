@@ -1,0 +1,47 @@
+{
+	"id":null,
+	"name":null,
+	"chargesVentilationTable":{
+		"id":null,
+		"rtuAndOnRtuSubTotal":0,
+		"onGlobalSubTotal":0,
+		"withoutRatioSubTotal":0,
+		"total":0,
+		"phases":[]
+	},
+	"description":null,
+	"code":null,
+	"status":{
+		"id":null,
+		"label":null
+	},
+	"project":{
+	"id":8,
+	"name":"Projet 1",
+	"creationDate":1534510161000,
+	"archived":false
+},
+	"metricTable":{
+		"id":null,
+		"name":null,
+		"createdOn":null,
+		"archived":null
+		},
+	"createdOn":null,
+	"updatedOn":null,
+	"creator":{
+		"id":null,
+		"firstname":"Luc",
+		"lastname":"HUUAM",
+		"birthdate":1534510161000,
+		"staff_number":"USR001",
+		"username":"view",
+		"password":"$2a$10$eMGvwa.wNF6hP3Niacw7juPRHbZwrrT2VuESPIQ8rPz6cJVDhxS.W"
+	},		
+	"validationWaitedOn":null,
+	"rejectedOn":null,
+	"cancelledOn":null,
+	"validatedOn":null,
+	"archivedOn":null,
+	"validator":null
+}

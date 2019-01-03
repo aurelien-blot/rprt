@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+</head>
+<body>
+<div th:fragment="adminNav" id="adminNav">
+	<div class ="container">
+		<div class="row">
+			<nav class="navbar navbar-expand-md">
+				  	  
+			    <ul class="navbar-nav">
+			      <li class="nav-item">
+			        <a class="nav-link"  th:href="@{/administration/users}">Utilisateurs </a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" th:href="@{/administration/projects}">Projets</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" th:href="@{/administration/teams}">Equipes</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" th:href="@{/administration/abacii}">Abaques</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" th:href="@{/administration/templates}">Modèles de devis</a>
+			      </li>
+			    </ul>
+			</nav>
+		</div>
+	</div>	
+				
+</div>
+</body>
+</html>

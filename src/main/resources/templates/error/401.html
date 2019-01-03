@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CGI - Outil de chiffrage</title>
+
+    <th:block th:replace="fragments/header :: header-css"></th:block>
+</head>
+<body>
+	<div th:replace="fragments/header :: header" ></div>
+	<div sec:authorize="isAuthenticated()">
+		<nav th:replace="fragments/navigation :: navigation" ></nav>
+	</div>
+
+	<div class="container">
+	
+	    <div class="starter-template">
+	        <h1>401 - Unauthorized</h1>
+	        <div th:inline="text">L'accès à cette page est restreint</div>
+	    </div>
+	    <div>
+	    	<a th:href ="@{/}">Accueil</a>
+	    </div>
+	
+	</div>
+	<!-- /.container -->
+	<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

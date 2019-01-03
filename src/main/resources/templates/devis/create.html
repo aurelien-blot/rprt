@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CGI - Outil de chiffrage</title>
+
+    <th:block th:replace="fragments/header :: header-css"></th:block>
+
+</head>
+<body>
+	<div th:replace="fragments/header :: header" ></div>
+	<nav th:replace="fragments/navigation :: navigation" ></nav>
+	<div id="newQuote" class="container">
+		<div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header justify-content-center d-flex">
+		        <h5 class="modal-title " id="exampleModalLongTitle">Créer un devis à partir d'un :</h5>
+
+		      </div>
+		      <div class="modal-body justify-content-around d-flex">
+		       	<button type="button" class="btn btn-primary" data-dismiss="modal">Projet existant</button>
+		       	<a  id="" th:href="@{/administration/projects/create}" aria-disabled="true" role="button" class="float-right btn btn-primary">Nouveau projet</a>
+		        
+		      </div>
+		    </div>
+		  </div>
+		</div>
+							
+		<div class="row justify-content-center">
+			<h2>Création de devis</h2>
+		</div>
+
+		<div id="initQuote" class="card ">
+			<div class="card-body">
+				<form method="POST" action="#" th:action="@{/devis/creation/metrics}" th:object="${quote}">
+				
+				
+					<div class="form-row">
+						<div class="form-group col-md-4">
+							<label required for="quoteName">Nom du devis</label>
+						    <input  th:field="*{name}" type="text" class="form-control" id="quoteName" placeholder="Entrez le nom du devis" required autocomplete="off" pattern="^[^ ].*" title="Votre nom de devis ne doit pas commencer par un espace !">
+						</div>
+						<div class="form-group col-md-8">
+							<label required for="descName">Description du devis</label>
+							<input  th:field="*{description}" type="text" class="form-control" id="descName" placeholder="Entrez la description du devis" autocomplete="off" >
+						</div>
+					</div>
+					
+					
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="selectContractNewQuote">Contrat</label>
+							<select  required name="selectContractNewQuote" id="selectContractNewQuote" class="form-control" >
+									<option value="" hidden>Choisissez un contrat</option>
+						            <option th:each="contract : ${allContracts}"
+						               th:value="${contract.id}"
+						               th:utext="${contract.name}"/>
+					         </select>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="selectTemplateNewQuote">Modèle de devis</label>
+						    <select required th:field="*{quoteTemplate}"  name="selectTemplateNewQuote" id="selectTemplateNewQuote" class="form-control" >
+								<option value="" hidden>Choisissez un modèle</option>
+					            <option th:each="quote_template : ${allQuoteTemplates}"
+					               th:value="${quote_template.id}"
+					               th:utext="${quote_template.name}"/>
+					        </select>
+						</div>				
+					</div>
+					<div class="form-row accordion">
+						
+						
+						<div class="form-group col-md-5">
+							<label for="selectProjectNewQuote">Projet :</label>
+						    <select required th:field="*{project}" name="selectProjectNewQuote" id="selectProjectNewQuote" class="form-control"  >
+						    	<option value="" selected hidden>Merci de sélectionner un contrat pour choisir un projet</option>
+						    </select>
+						</div>
+
+						<div id="teamSelectDiv" class="form-group col-md-6 offset-md-1 d-none">
+						 	<label for="selectTeamNewQuote">Équipe</label>
+						    <select required th:field="*{teams}" name="selectTeamNewQuote" id="selectTeamNewQuote" class="form-control"  >
+						    	<option value="" selected hidden>Merci de sélectionner un contrat pour choisir une équipe</option>
+						    </select>
+						</div>
+					</div>
+					 
+					<!-- 
+					<div class="form-row accordion">
+						<div class="form-group col-md-6">
+						 	<label for="selectTeamNewQuote">Équipe</label>
+						    <select required th:field="*{teams}" name="selectTeamNewQuote" id="selectTeamNewQuote" class="form-control"  >
+						    	<option value="" selected hidden>Merci de sélectionner un contrat pour choisir une équipe</option>
+						    </select>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="selectProjectNewQuote">Projet</label>
+						    <select required th:field="*{project}" name="selectProjectNewQuote" id="selectProjectNewQuote" class="form-control"  >
+						    	<option value="" selected hidden>Merci de sélectionner un contrat pour choisir un projet</option>
+						    </select>
+						</div>
+					</div>
+						
+						 
+					<div class="row justify-content-center">
+						<button id="initQuoteButton" type="submit" class="btn btn-outline-secondary btn-lg" disabled>Initialiser le devis</button>
+					</div>
+					
+
+				
+					<div id="alert">
+						<div id="alertSelectContractBefore" class="alert alert-danger d-none" role="alert">Merci de sélectionner un contrat dans un premier temps</div>
+					
+					
+						
+						
+						<div id="filterByContract" class="alert alert-primary d-none" role="alert">Les équipes et les projets sont filtrées en fonction du contrat sélectionné</div>
+						
+						
+						<div id="filterByTeam" class="alert alert-primary d-none" role="alert">Les projets du contrat sélectionné sont filtrés en fonction des équipes sélectionnées <button type="button" class="resetTeamAndContract btn btn-light btn-sm"><i class="align-middle icon fas fa-redo fa-1x"></i>Supprimer le filtre</button></div>
+						<div id="filterByProject" class="alert alert-primary d-none" role="alert">Les équipes du contrat sélectionné sont filtrés en fonction du projet sélectionné <button type="button" class="resetTeamAndContract btn btn-light btn-sm"><i class="align-middle icon fas fa-redo fa-1x"></i>Supprimer le filtre</button></div>
+					
+					</div>
+ -->	
+ 					<div class="row justify-content-center">
+						<button id="initQuoteButton" type="submit" class="btn btn-outline-secondary btn-lg" disabled>Initialiser le devis</button>
+					</div>
+				
+				
+				</form>
+            </div>
+        </div>
+   </div>
+		
+	<div th:replace="fragments/footer :: footer"></div>
+	
+	<script type="text/javascript" th:src="@{/js/create.js}"></script>
+	<script type="text/javascript" th:src="@{/js/step1_devis.js}"></script>
+</body>
+</html>

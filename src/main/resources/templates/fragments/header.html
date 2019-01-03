@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <th:block th:fragment="header-css">
+    <meta charset="UTF-8" />
+        <!-- this is header-css -->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/steps.css}"/>
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.2.0/css/all.css}">
+		<link rel="stylesheet" type="text/css"th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.css}">
+    </th:block>
+</head>
+<body>
+	<div th:fragment="header">
+		<div class="container-fluid title">
+			<h1 class="text-center vcenter"><a th:href="@{/}">CGI - Outil de chiffrage</a></h1>
+		</div>
+	</div>
+</body>
+</html>

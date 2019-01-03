@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot Thymeleaf + Spring Security</title>
+
+    <div th:replace="fragments/header :: header-css"></div>
+
+</head>
+<body>
+
+	<div th:replace="fragments/header :: header" ></div>
+	
+	<div class="container">
+	   	Si vous voyez ceci, vous avez bonne vue et le test a réussi.
+	</div>
+	<!-- /.container -->
+	
+	<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

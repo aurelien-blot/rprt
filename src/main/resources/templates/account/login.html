@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CGI - Outil de chiffrage</title>
+
+    <th:block th:replace="fragments/header :: header-css"></th:block>
+</head>
+<body>
+	<div th:replace="fragments/header :: header" ></div>
+	
+	<div class="container">
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <form th:action="@{/login}" method="post">
+                <fieldset>
+                    <h1>Veuillez vous connecter</h1>
+
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger">
+                            Combinaison utilisateur et mot de passe invalide.
+                        </div>
+                    </div>
+                    <div th:if="${param.logout}">
+                        <div class="alert alert-info">
+                            Vous avez été déconnecté.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" name="username" id="username" class="form-control input-lg"
+                               placeholder="Identifiant" required="true" autofocus="true" autocomplete="off"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" id="password" class="form-control input-lg"
+                               placeholder="Mot de passe" required="true" autocomplete="off"/>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <input type="submit" class="btn btn-lg btn-primary btn-block" value="Connexion"/>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+	
+	<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

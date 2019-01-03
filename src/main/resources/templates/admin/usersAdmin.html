@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CGI - Outil de chiffrage</title>
+
+    <div th:replace="fragments/header :: header-css"></div>
+    <div th:replace="fragments/bootstrapTableHead :: bootstrap-table-css"></div>
+
+</head>
+<body>
+
+	<div th:replace="fragments/header :: header" ></div>
+	<nav th:replace="fragments/navigation :: navigation" ></nav>
+	<div th:replace="admin/fragments/adminNav.html :: adminNav" ></div>
+	
+	<div id="usersDiv" class="container">
+       	<div class="row">
+       
+			<div id="block-2" class="home-block col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<h3 class="center">Liste des utilisateurs</h3>
+				<table id="searchTable" class="table table-striped table-sm  table-fixed" 
+					data-toggle="table"
+ 					data-search="true"
+					data-filter-control="true" 
+					data-toolbar="#toolbar">
+					<thead>
+						<tr>
+							<th scope="col" data-field="username" data-filter-control="input" data-sortable="true">Utilisateur</th>
+							<th scope="col" data-field="lastname" data-filter-control="input" data-sortable="true">Nom</th>
+							<th scope="col" data-field="firstname" data-filter-control="input" data-sortable="true">Prénom</th>
+							<th scope="col" data-field="staffNumber" data-filter-control="input" data-sortable="true">Matricule</th>
+							<th scope="col" data-field="role" data-filter-control="select" data-sortable="true">Rôle</th>
+							<th scope="col"></th>
+							<th scope="col"></th>
+						</tr>
+					</thead> 
+					<tbody id="usersData" >
+						<tr th:each="user : ${users}">
+						 	<td th:text="${user.username}"></td>
+							<td th:text="${user.firstname}"></td>
+							<td th:text="${user.lastname}"></td>
+							<td th:text="${user.staffNumber}"></td>
+							<td th:text="${user.role.label}"></td>
+							
+							<td><a  th:href="@{/administration/users/modif/}+${user.getId()}"  title="Modifier l'utilisateur" aria-disabled="true" role="button" class="btn btn-outline-warning"><i class="fa fa-pen"></i></a></td>
+							 <td><a  href="" th:if="${user.id} != ${applicationUserId}"  title="Supprimer l'utilisateur" th:attr="data-id=${user.getId()}" aria-disabled="true" role="button" class="btn btn-outline-danger deleteUserBtn"><i class="far fa-times-circle"></i></a></td>
+							
+						</tr>
+					</tbody>
+					<tfoot>
+							<tr>
+								<th colspan="8" class="text-center"><a  th:href="@{/administration/users/create}"  title="Ajouter un utilisateur" aria-disabled="true" role="button " class="text-center  btn-rond btn btn-md btn-outline-success" ><i class="fas fa-lg fa-plus-circle"></i></a></th>					
+							</tr>
+						</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div th:replace="fragments/footer :: footer"></div>
+	<div th:replace="fragments/bootstrapTableScripts :: bootstrap-table-footer"></div>
+	<script type="text/javascript" th:src="@{/js/userAdmin.js}"></script>
+
+</body>
+</html>

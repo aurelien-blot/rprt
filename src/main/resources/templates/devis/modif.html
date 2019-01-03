@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CGI - Outil de chiffrage</title>
+
+    <th:block th:replace="fragments/header :: header-css"></th:block>
+
+</head>
+<body>
+	<input class="d-none" id="idDivView" th:value="${idDivView}" disabled/>
+	<div th:replace="fragments/header :: header" ></div>
+	<nav th:replace="fragments/navigation :: navigation" ></nav>
+	<div id="content">
+		<form id="abacusForm"  method="POST" action="#" th:action="@{/devis/save/}" th:object="${quote}">
+
+			
+			<div id="ssmenu-quote " class="container">
+				<div class="card">
+					<div class="card-body-slim">
+						<div class="row">
+												
+							<div class="col-lg-6">
+								<div id="BlocTitle1" >
+									<span th:text="${quote.getProject().getName()}"></span>
+									<span> / </span>
+									<span th:text="${quote.getCode()}"/></span>
+									<span> / Créé le : </span>
+									<span th:text="${quote.getCreatedOnFormat()}" /></span>
+									<span> / Equipe(s) : </span>
+									
+
+									<span th:each="team : ${quote.getTeams()}" th:text="${team.getName()}+' '" /></span>
+									
+<!-- 								<td><th:block th:each="team : *{quote.getTeams()}"><span th:text="${team.getName()}+' '"></span></th:block></td> -->
+									
+									
+								</div>
+								<div id="BlocTitle2" >
+										<h3><input id="quoteTitle" name="name" th:value="${quote.getName()}" autocomplete="off" th:readonly="${viewOnly}"/></h3>
+										<span class="modifyTitle d-none"><i class="modifyTitleIcon fa fa-pen"></i></span>
+								</div>
+								<div id="BlocTitle3" >
+									<p>
+										<input id="quoteDescription" name ="description" th:field="*{description}" th:value="${quote.getDescription()}" class="fmodifyLabel" autocomplete="off" th:readonly="${viewOnly}"/>
+										<span class="modifyDescription d-none"><i class="modifyDescriptionIcon fa fa-pen"></i></span>
+									</p>
+								</div>
+								<div id="BlocTitle4" >
+									<input  id="quoteId" class="d-none" name ="id" th:value="${quote.getId()}"/>
+									<input  id="abacusId" class="d-none" name ="id" th:value="${quote.getAbacus().getId()}"/>
+								</div>
+							</div>
+		
+		
+							<div  class="top-buttons col-lg-6">
+					<!--  		<a th:if="${!viewOnly and consult}" id="" th:href="@{/devis/view/}+${quote.getId()}" aria-disabled="true" role="button" class="float-right btn btn-outline-success"><i class="align-middle icon fas fa-search fa-2x"></i><span>Revenir en consultation</span></a> -->
+								<a th:if="${!viewOnly}" id="" th:href="@{/devis/view/}+${quote.getId()}" aria-disabled="true" role="button" class="float-right btn btn-outline-primary"><i class="align-middle icon fas fa-search fa-2x"></i><span>Revenir en consultation</span></a>
+								<button th:if="!${viewOnly}" id="sendBtn" type="button" class="float-right btn btn-outline-secondary" disabled><i class="align-middle icon far fa-share-square fa-2x"></i><span>Envoyer en validation</span></button>
+								<button th:if="!${viewOnly}" id="saveBtn" type="button" class="saveBtns float-right btn btn-outline-success"><i class="align-middle icon far fa-save fa-2x"></i><span>Enregistrer le devis</span></button>
+								<a th:if="${quote.getStatus() == T(com.cgi.java.FilRouge.enums.EnumStatus).INPROGRESS and viewOnly}" id="" th:href="@{/devis/modif/}+${quote.getId()}" aria-disabled="true" role="button" class="float-right btn btn-outline-warning"><i class="align-middle icon fas fa-edit fa-2x"></i><span>Modifier le devis</span></a>
+								<a th:if="${viewOnly}" id="excelBtn" th:href="@{/devis/excel/}+${quote.getId()}" aria-disabled="true" role="button" class="excelBtns float-right btn btn-outline-success"><i class="align-middle icon fas fa-download fa-2x"></i><span>Export Excel</span></a>
+							</div>
+						
+						</div>		
+					</div>	
+				</div>	
+			</div>
+				
+			<div class="container">
+				<div class="row">
+
+					<ol class="step-indicator col-lg-12">
+						<li id="step1" class="active">
+							<div id="part1" class="stepPointer pointer">
+								<div class="step"><i class="fa fa-list-ul"></i></div>
+								<div class="caption cpt1 hidden-xs hidden-sm">Etape <span>1</span> : <span>Abaque</span></div>
+							</div>
+						</li>
+						<li id="step2" class="active">
+							<div id="part2" class="stepPointer pointer">
+								<div class="step"><i class="fa fa-calculator"></i></div>
+								<div class="caption cpt2 hidden-xs hidden-sm">Etape  <span>2</span> : <span>Chiffrage Réalisation</span></div>
+							</div>
+						</li>
+						<li id="step3">
+							<div id="part3" class="stepPointer not-allowed">
+								<div class="step"><i class="fa fa-euro-sign"></i></div>
+								<div class="caption cpt3 hidden-xs hidden-sm">Etape  <span>3</span> : <span>Chiffrage Global</span></div>
+							</div>
+						</li>
+					</ol>
+
+				</div>
+			</div>
+				
+				
+				
+
+		
+			<div id="metric" class="container d-none">
+	               
+	           	<div class="row">
+
+					<div class="col-lg-12">
+	               		<div class="card">
+						 	<div class="card-header" th:text="${quote.getAbacus().getName()}"></div>
+							<div class="card-body quote-table">
+								<div class="table-responsive quote-table">
+									<table class="table table-striped table-sm">
+										<thead>
+											<tr>
+												<th scope="col">Type</th>
+												<th scope="col">Typologie</th>
+												<th scope="col">Rôle</th>
+												<th scope="col">Niveau d'intervention</th>
+												<th scope="col">Complexité</th>
+												<th scope="col">Charge unitaire</th>
+											</tr>
+										</thead> 
+										<tbody id="abacusData" >
+											<tr th:each="parameter : ${quote.getAbacus().getParameters()}">
+											 	<td th:text="${parameter.metric.type}"></td>
+												<td th:text="${parameter.metric.typology}"></td>
+												<td th:text="${parameter.metric.task}"></td>
+												<td th:text="${parameter.metric.interventionLevel}"></td>
+												<td th:text="${parameter.metric.complexity}"></td>										
+												<td th:text="${parameter.unitCharge}"></td>
+											</tr>
+										</tbody>
+									</table>
+
+
+								</div>
+							</div>
+						</div>
+<!-- 						<div class="row"> -->
+<!-- 							<div class="col-lg-12 text-center"> -->
+<!-- 								<button id="" type="button" class="btn btn-outline-success"><span>Chiffrage Réalisation</span><i class="icon align-middle fas fa-arrow-circle-right fa-2x"></i></button> -->
+<!-- 							</div>					 -->
+<!-- 						</div> -->
+					</div>
+				</div>
+			</div>
+			
+				
+			
+			<div id="productionWorkLoad" class="container d-none">
+				<div class="row">
+	           		<div class="col-lg-12">
+	           			<div class="card">
+							<div class="card-header">Chiffrage Réalisation :</div>
+							<div class="card-body quote-table">
+								<div class="table-responsive quote-table">
+									<table class="table table-striped table-sm">
+										<thead>
+											<tr>
+												<th scope="col">Nom du module</th>
+												<th scope="col">Type de module</th>
+												<th scope="col">Typologie</th>
+												<th scope="col">Rôle</th>
+												<th scope="col">Complexité</th>
+												<th scope="col">Niveau d'intervention</th>
+												<th scope="col">Charges unitaires</th>
+												<th scope="col">Charges révisées</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody id="productionWorkLoadData">
+										  
+											<th:block    th:each="module : ${quote.getModules()}">
+												
+												<tr class="moduleLine">
+													<td class="d-none"><input class="moduleIdInput" th:value="*{modules[__${moduleStat.index}__].id}"/></td>
+													<td class="moduleNameInput "><input th:field="*{modules[__${moduleStat.index}__].name}" class="moduleInput" type="text" placeholder="Ajouter un module" th:readonly="${viewOnly}"/></td>
+													<td><p th:text="*{modules[__${moduleStat.index}__].parameter.metric.type}"></p></td>  
+													<td><p th:text="*{modules[__${moduleStat.index}__].parameter.metric.typology}"></p></td>
+													<td><p th:text="*{modules[__${moduleStat.index}__].parameter.metric.task}"></p></td>
+													<td><p th:text="*{modules[__${moduleStat.index}__].parameter.metric.complexity}"></p></td>
+													<td><p th:text="*{modules[__${moduleStat.index}__].parameter.metric.interventionLevel}"></p></td>
+													<td class="unitChargesInput"><input th:value="*{modules[__${moduleStat.index}__].parameter.unitCharge}" th:readonly="${viewOnly}" th:disabled="!${viewOnly}" size="6"></td>
+													<td class="d-none"><input class="idMetricInput" th:value="*{modules[__${moduleStat.index}__].parameter.metric.id}"/></td>
+													<td class="d-none"><input class="idParameterInput" th:value="*{modules[__${moduleStat.index}__].parameter.id}" /></td>
+													<td class="revisedChargesInput"><input class="calc numeric" th:field="*{modules[__${moduleStat.index}__].revisedCharge}" th:readonly="${viewOnly}" size="6"/></td>
+													<td  class="deleteModule "><button th:if="!${viewOnly}"  title="Supprimer le module" class="btn btn-md btn-danger btn-lg btn-rond"><i class="far fa-times-circle"></i></button></td>
+												</tr>
+	
+											</th:block>
+											 
+										</tbody>
+										<tfoot>
+											<tr>
+												<th colspan="9" th:if="!${viewOnly}" class="text-center"><button type="button"  title="Ajouter un module" id="addModuleBtn"class="btn btn-md btn-success btn-lg btn-rond"><i class="fas fa-plus-circle"></i></button></th>
+												
+											</tr>
+											<tr>
+												<th colspan="9" class="text-right"><p>Total : <span id="totalPWL">0</span></p></th>
+											</tr>
+										</tfoot>
+		
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 text-center">
+						<button th:if="!${viewOnly}" id="PWLValidationButton" type="button" class="saveBtns btn btn-outline-secondary" disabled><i class="icon align-middle far fa-check-circle fa-2x"></i><span>Valider le Chiffrage Réalisation</span></button>
+						<!-- <button th:if="${viewOnly}" id="" type="button" class="btn btn-outline-success"><i class="icon align-middle fas fa-arrow-circle-left"></i><span>Abaque</span></button> -->
+						<!-- <button th:if="${viewOnly}" id="" type="button" class="btn btn-outline-success"><i class="icon align-middle fas fa-arrow-circle-right"></i><span>Chiffrage Global</span></button> -->
+					</div>					
+				</div>
+			</div>
+			
+			
+			
+			<div id="global" class="container d-none">
+				<div class="row">
+
+	           		<div class="col-lg-12">
+	           			<div class="card">
+							<div class="card-header">Chiffrage global :</div>
+							<div class="card-body quote-table">
+								<div class="table-responsive quote-table">
+									<table class="table table-striped table-sm">
+										<thead>
+											<tr>
+												<th scope="col">Phases</th>
+												<th scope="col">Type de ratio</th>
+												<th scope="col">Charges sans ratio</th>
+												<th scope="col">% Charges RTU</th>
+												<th scope="col">Charges</th>
+												<th scope="col">% Charges sur global</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody id="GWLData">
+											<th:block th:each="phase : ${quote.getPhases()}">
+												 <tr class="phaseLine">
+													<td class="d-none"><input class="phaseIdInput" th:value="*{phases[__${phaseStat.index}__].id}"/></td>
+													<td ><input required class="phaseNameInput" th:value="*{phases[__${phaseStat.index}__].name}"  th:disabled="${phase.getPhaseType()== T(com.cgi.java.FilRouge.enums.EnumPhaseType).RTU}" th:readonly="${viewOnly}"/></td>
+													<td>
+													 	<select class="selectPhaseType" disabled>
+													 		<option th:value="${T(com.cgi.java.FilRouge.enums.EnumPhaseType).RTU}" th:if="${phase.getPhaseType() == T(com.cgi.java.FilRouge.enums.EnumPhaseType).RTU }" th:selected="${phase.getPhaseType() == T(com.cgi.java.FilRouge.enums.EnumPhaseType).RTU }">RTU</option>
+													 		<option th:value="${T(com.cgi.java.FilRouge.enums.EnumPhaseType).ONRTU}"th:selected="${phase.getPhaseType() == T(com.cgi.java.FilRouge.enums.EnumPhaseType).ONRTU }">Sur RTU</option>
+													 		<option th:value="${T(com.cgi.java.FilRouge.enums.EnumPhaseType).WITHOUTRATIO}" th:selected="${phase.getPhaseType() == T(com.cgi.java.FilRouge.enums.EnumPhaseType).WITHOUTRATIO}">Sans ratio / Sur devis</option>
+													 		<option th:value="${T(com.cgi.java.FilRouge.enums.EnumPhaseType).UOS}" th:selected="${phase.getPhaseType() == T(com.cgi.java.FilRouge.enums.EnumPhaseType).UOS}">Unité d'oeuvre spécifique</option>
+													 		<option th:value="${T(com.cgi.java.FilRouge.enums.EnumPhaseType).ONGLOBAL}" th:selected="${phase.getPhaseType() == T(com.cgi.java.FilRouge.enums.EnumPhaseType).ONGLOBAL }">Sur global</option>
+													 	</select>
+												 	</td>
+												 	<!--  FORMULES DE IF OR ... UN PEU COMPLIQUE CAR TERNAIRE DANS TERNAIRE -->
+													<td class="chargesWithoutratio"><input class="chargesWithoutratioValue numeric" th:disabled="${(phase.getPhaseType() !=T(com.cgi.java.FilRouge.enums.EnumPhaseType).WITHOUTRATIO)?((phase.getPhaseType() !=T(com.cgi.java.FilRouge.enums.EnumPhaseType).UOS)?true:false):false}"  th:readonly="${viewOnly}" size="2" th:value="${phase.getPhaseType() != T(com.cgi.java.FilRouge.enums.EnumPhaseType).WITHOUTRATIO}? ((${phase.getPhaseType() != T(com.cgi.java.FilRouge.enums.EnumPhaseType).UOS})?'':*{phases[__${phaseStat.index}__].value}):*{phases[__${phaseStat.index}__].value}"></td>
+													<td class="onRTU"><input th:id="${phase.getPhaseType() == T(com.cgi.java.FilRouge.enums.EnumPhaseType).RTU}?'rtuRatio':''" class="onRTUValue numeric" th:disabled="${phase.getPhaseType() != T(com.cgi.java.FilRouge.enums.EnumPhaseType).ONRTU}" th:readonly="${viewOnly}"  size="2" th:value="${phase.getPhaseType() == T(com.cgi.java.FilRouge.enums.EnumPhaseType).ONRTU}?*{phases[__${phaseStat.index}__].value}:(${phase.getPhaseType() == T(com.cgi.java.FilRouge.enums.EnumPhaseType).RTU}?'100':'')">%</td>
+													<td id="rtuValue" class="chargesValue" th:text="${phase.getPhaseType() == T(com.cgi.java.FilRouge.enums.EnumPhaseType).RTU}? *{phases[__${phaseStat.index}__].value}:(${phase.getPhaseType() == T(com.cgi.java.FilRouge.enums.EnumPhaseType).ONRTU}?(${#numbers.formatDecimal((quote.getPhaseRtu().value * phase.value/100),1,2)}):'')"></td>
+													<td class="onGlobal"><input class="onGlobalValue numeric" th:disabled="${phase.getPhaseType() != T(com.cgi.java.FilRouge.enums.EnumPhaseType).ONGLOBAL}" th:readonly="${viewOnly}" size="2" th:value="${phase.getPhaseType()== T(com.cgi.java.FilRouge.enums.EnumPhaseType).ONGLOBAL}? *{phases[__${phaseStat.index}__].value}:''">%</td>
+													<td class="deletePhase"><button   title="Supprimer la phase" type="button" th:if="${phase.getPhaseType() != T(com.cgi.java.FilRouge.enums.EnumPhaseType).RTU and !viewOnly}" class="btn btn-md btn-danger btn-lg btn-rond"><i class="far fa-times-circle"></i></button></td>
+											 	</tr>
+												<tr  class="noteLine" th:if="${phase.getPhaseType() == T(com.cgi.java.FilRouge.enums.EnumPhaseType).WITHOUTRATIO or phase.getPhaseType() ==T(com.cgi.java.FilRouge.enums.EnumPhaseType).UOS}"><td colspan="7" class=" col-lg-12 text-center"><input th:readonly="${viewOnly}" class="justifValue col-lg-10" type ="textarea" placeholder="Merci de justifier la charge imputée." th:value="*{phases[__${phaseStat.index}__].justification}" /></td></tr>
+											  </th:block> 	
+										</tbody>
+										<tfoot>
+											<tr>
+												<th colspan="8" class="text-center"><button th:if="!${viewOnly}" type="button"   title="Ajouter une phase" id="addPhaseBtn"class="btn btn-md btn-success btn-lg btn-rond"><i class="fas fa-plus-circle"></i></button></th>					
+											</tr>
+										</tfoot>
+		
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row ss-total">
+	           		<div class="card col-lg-12">					
+						<div class="card-body quote-table-short">
+								<div class="table-responsive quote-table-short">
+									<table class="table table-striped table-sm">
+									
+									<tbody id="GWLData">
+										<tr>
+											<td>Charge totale des phases avec ratio sur RTU + RTU </td>
+											<td id="totalGWLRtuOnRtu">0</td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Charge totale des phases sans ratio</td>
+											<td id="totalWithoutRatio">0</td>
+											<td></td>
+										</tr>
+										<tr>
+											<td>Charge totale des phases avec ratio sur global</td>
+											<td id="chargeOnGlobal">0</td>
+											<td id="percentOnGlobal"></td>
+										</tr>
+	
+									</tbody>
+									<tfoot>
+										<tr>
+											<th colspan="8" class="text-right"><p>Charge Totale : <span id="totalGWL">0</span>*</p></th>
+										</tr>
+									</tfoot>
+									</table>
+								</div>
+							</div>			
+						</div>				
+					</div>
+					<div class="row">
+					<div class="col-lg-12 text-center">
+						<button th:if="!${viewOnly}" id="GWLValidationButton" type="button" class="saveBtns btn btn-outline-secondary" disabled><i class="icon align-middle far fa-check-circle fa-2x"></i><span>Valider le Chiffrage Global</span></button>
+						<!-- <button th:if="${viewOnly}" id="" type="button" class="btn btn-outline-success"><i class="fas fa-arrow-circle-left"></i><span>Chiffrage Réalisation</span></button> -->
+					</div>					
+				</div>
+				</div>
+				
+			
+			</div>
+		</form>
+	</div>
+	
+	<div th:replace="fragments/footer :: footer"></div>
+	<script th:inline="javascript" type="text/javascript" th:src="@{/js/global_quote.js}"></script>
+	<script th:if="!${viewOnly}" th:inline="javascript" type="text/javascript" th:src="@{/js/modif.js}"></script>
+</body>
+</html>
