@@ -1,6 +1,5 @@
 package com.cgi.java.FilRouge.controller;
 
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -54,18 +53,10 @@ import com.cgi.java.FilRouge.service.QuoteTemplateServiceImpl;
 import com.cgi.java.FilRouge.service.TeamServiceImpl;
 import com.cgi.java.FilRouge.service.dto.QuoteFormServiceImpl;
 
-
-
 @Controller
 @SessionAttributes(value={"quote", "phase"})
 @RequestMapping("/devis")
 public class QuoteController {
-	
-	@Autowired
-	ContractServiceImpl contractServiceImpl;
-	
-	@Autowired
-	ProjectServiceImpl projectServiceImpl;
 	
 	@Autowired
 	QuoteServiceImpl quoteServiceImpl;
@@ -93,12 +84,14 @@ public class QuoteController {
 	@Autowired
 	TeamServiceImpl teamServiceImpl;
 	
+	@Autowired
+	ContractServiceImpl contractServiceImpl;
+	
+	@Autowired
+	ProjectServiceImpl projectServiceImpl;
+	
 	@GetMapping(value={"recherche", "recherche/"})
     public String search(Model model, @RequestParam(value="q", required=false) String q) {
-		/*if( q != null) {
-			List<Quote> quotes = quoteServiceImpl.findBySearchQuery(q);
-			model.addAttribute("quotes", quotes);
-		}*/
 		List<Quote> allQuotes = quoteServiceImpl.findAll();
 		model.addAttribute("quotes", allQuotes);
 		

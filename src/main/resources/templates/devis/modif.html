@@ -58,8 +58,15 @@
 								<button th:if="!${viewOnly}" id="sendBtn" type="button" class="float-right btn btn-outline-secondary" disabled><i class="align-middle icon far fa-share-square fa-2x"></i><span>Envoyer en validation</span></button>
 								<button th:if="!${viewOnly}" id="saveBtn" type="button" class="saveBtns float-right btn btn-outline-success"><i class="align-middle icon far fa-save fa-2x"></i><span>Enregistrer le devis</span></button>
 								<a th:if="${quote.getStatus() == T(com.cgi.java.FilRouge.enums.EnumStatus).INPROGRESS and viewOnly}" id="" th:href="@{/devis/modif/}+${quote.getId()}" aria-disabled="true" role="button" class="float-right btn btn-outline-warning"><i class="align-middle icon fas fa-edit fa-2x"></i><span>Modifier le devis</span></a>
-								<a th:if="${viewOnly}" id="excelBtn" th:href="@{/devis/excel/}+${quote.getId()}" aria-disabled="true" role="button" class="excelBtns float-right btn btn-outline-success"><i class="align-middle icon fas fa-download fa-2x"></i><span>Export Excel</span></a>
+								
+								<a th:if="${viewOnly}" id="excelBtn" th:href="@{/devis/excel/}+${quote.getId()}" aria-disabled="true" role="button" class="excelBtns float-right btn btn-outline-success">
+									<i class="align-middle icon fas fa-download fa-2x">
+									</i>
+									<span>Export Excel</span>
+								</a>
+							
 							</div>
+						
 						
 						</div>		
 					</div>	

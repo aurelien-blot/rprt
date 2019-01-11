@@ -41,12 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 		  http.csrf().disable()
           .authorizeRequests()
-          
-          
-          		//	Autorise la plupart des pages de l'application
-				//.antMatchers("/", "/setupRoles", "/createPerson", "/home", "/devis", "/devis/**", "/mon-compte/**", "/administration/**", "/test", "/about", "/webjars/**", "/css/**", "/js/**" ).permitAll()
-				
-          		//	Bloque toutes les pages de l'appli
           		.antMatchers("/webjars/**", "/css/**", "/js/**" , "/test/**").permitAll()
 				.antMatchers("/administration/**").hasAnyRole("ADMIN_VIEW")
 				.antMatchers("/user/**").hasAnyRole("USER", "ADMIN", "ADMIN_VIEW")

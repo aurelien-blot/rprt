@@ -77,7 +77,7 @@ public class QuoteFormServiceImpl {
 				rtu = (PhaseRtu)phase;
 			}
 		}
-		//PhaseRtu rtu = quoteServiceImpl.findById(quoteFormIn.getId()).getPhaseRtu();
+
 		// ON ENREGISTRE LES NOUVEAUX MODULES
 
 		List<ModuleDto> modulesDtoList = new ArrayList<ModuleDto>();

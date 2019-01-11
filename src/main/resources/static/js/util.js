@@ -1,5 +1,5 @@
-//var artifactId = "";
-var artifactId = "/chiffragecgi";
+var artifactId = "";
+//var artifactId = "/chiffragecgi";
 
 function generateUrl(url){
 	return artifactId+url;

@@ -74,11 +74,8 @@ public class AdminUsersController {
 	}
 	
 	@PostMapping(value={"/save/", "/user/save"})
-	public ModelAndView saveUser(@ModelAttribute User user,  BindingResult result, Model model,ModelMap modelMap) {
-		
-		userServiceImpl.save(user);
-		
-		
+	public ModelAndView saveUser(@ModelAttribute User user,  BindingResult result, Model model,ModelMap modelMap) {	
+		userServiceImpl.save(user);	
 		return new ModelAndView("redirect:/administration/users/");
 	}
 	
@@ -88,7 +85,6 @@ public class AdminUsersController {
 		User user = new User();
 		user.setPassword(bCryptPasswordEncoder.encode(User.genericPassword));
 		int applicationUserId = userServiceImpl.findByUsername(auth.getName()).getId();
-				
 		List<Role> roles = roleServiceImpl.findAll();
 		
 		model.addAttribute("genericPassword", User.genericPassword);

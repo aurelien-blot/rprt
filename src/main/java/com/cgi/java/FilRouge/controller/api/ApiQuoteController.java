@@ -390,22 +390,17 @@ public class ApiQuoteController {
 		return result ;
 		
     }
+	
 	@PostMapping(value={"/save", "/save/"})
-    public String saveQuote (@RequestParam("id") int quoteId,@RequestParam("name") String quoteName,@RequestParam("description") String quoteDescription,@RequestParam("phases") String phases, @RequestParam("modules") String modules, @RequestParam("deletedPhases") String deletedPhases,@RequestParam("deletedModules") String deletedModules,@RequestParam("idDivView") int idDivView ) {
-		
-		//Pour qu'une nouvelle donnée soit sauvegarder après avoir appuyer sur "Enregistrer un devis" et ne soit pas à NULL en base :
-		//Ajouter cette donnée en attribut dans le QuoteForm.java
+    public String saveQuote (@RequestParam("id") int quoteId,@RequestParam("name") String quoteName,@RequestParam("description") String quoteDescription,
+    			@RequestParam("phases") String phases, @RequestParam("modules") String modules, @RequestParam("deletedPhases") String deletedPhases,
+    			@RequestParam("deletedModules") String deletedModules,@RequestParam("idDivView") int idDivView ) {
 
 		QuoteFormDto quoteFormIn = quoteServiceImpl.findAndMakeAsDto(quoteId);
-		
-		//	Attention, modifyDtoRequest ne laisse pas penser par son nom qu'elle save les phases
 		QuoteFormDto quoteFormOut = quoteFormServiceImpl.modifyDtoRequest(quoteFormIn, quoteName, quoteDescription, phases, modules, deletedPhases, deletedModules);
 		Quote quote= quoteMapper.toEntity(quoteFormOut);
-		
-		//Calcul de toutes les charges
 		quoteServiceImpl.setTotalCalculsFromQuote(quote);
 
-//		Pour une raison inconnue, quote est détaché de l'instance persistée, mais est quand même mise à jour, à surveiller.
 		quoteServiceImpl.save(quote);
 		return "ok";
     }

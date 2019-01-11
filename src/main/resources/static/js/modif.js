@@ -454,6 +454,11 @@ function updatePhases(){
 
 };
 
+$('.saveBtns').on("click", function(e){
+	e.preventDefault();
+	saveQuote();
+	
+});
 
 function saveQuote(){
 
@@ -477,11 +482,7 @@ function saveQuote(){
 	}, "/devis/save/", formModif);
 }
 
-$('.saveBtns').on("click", function(e){
-	e.preventDefault();
-	saveQuote();
-	
-});
+
 
 
 //Permet de sauvegarder un devis sur la page modif en faisant Ctrl + S ou Command + S sous Mac

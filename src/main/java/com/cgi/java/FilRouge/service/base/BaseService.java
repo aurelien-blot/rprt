@@ -38,6 +38,14 @@ public abstract class BaseService<REPO extends JpaRepository<C, Integer>, C> {
 	@Autowired
 	protected REPO repository;
 
+	@Transactional(rollbackOn = EntityNotFoundException.class)
+	public List<C> findAll() throws EntityNotFoundException{
+		final List<C> thing = this.repository.findAll();
+		if( thing == null ) {
+			throw new EntityNotFoundException();
+		}
+		return thing;
+	}
 	
 	@Transactional(rollbackOn = EntityNotFoundException.class)
 	public C delete(final Integer id) throws EntityNotFoundException{
@@ -62,14 +70,7 @@ public abstract class BaseService<REPO extends JpaRepository<C, Integer>, C> {
 		
 	}
 	
-	@Transactional(rollbackOn = EntityNotFoundException.class)
-	public List<C> findAll() throws EntityNotFoundException{
-		final List<C> thing = this.repository.findAll();
-		if( thing == null ) {
-			throw new EntityNotFoundException();
-		}
-		return thing;
-	}
+
 	
 	@Transactional(rollbackOn = EntityNotFoundException.class)
 	public void save(C thing) throws EntityNotFoundException{
